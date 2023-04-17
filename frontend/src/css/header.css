@@ -1,0 +1,36 @@
+/*This is the css for header where is the Logo*/
+
+.text-secondary {
+    color: #6c757d!important;
+}
+.bg-primary {
+    background-color: #4485AF !important;
+}
+.justify-content-between {
+    justify-content: space-between !important;
+}
+.align-items-end {
+    align-items: flex-end !important;
+}
+.text-secondary {
+    color: #D0D0D0 !important;
+}
+.text-warning {
+    color: #DD9A1F !important;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+ .row>img {
+    padding-right: unset;
+    width: unset;
+}
+
+@media screen and (min-width: 576px) {
+    .d-sm-block {
+        display: block !important;
+    }
+}
