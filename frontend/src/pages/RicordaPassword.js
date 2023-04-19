@@ -14,6 +14,7 @@ const RicordaPassword = () => {
    */
     const [email, setEmail] = useState('');
     const [noEmail, setNoEmail] = useState(false);
+    const [noEmailAlert, setNoEmailAlert] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const [message, setMessage] = useState('inserire la propria email')
@@ -37,6 +38,7 @@ const RicordaPassword = () => {
         if(email === ""){
             setMessage("inserire la propria email");
             setNoEmail(true);
+            setNoEmailAlert(true);
         }else{
             const checkRegax = new RegExp('[a-zA-Z0-9_.-]*[@.][a-zA-Z]{2,4}$');
             if(checkRegax.test(email)){
@@ -45,13 +47,31 @@ const RicordaPassword = () => {
             }
             setMessage("controlla che l'email sia stata scritta correttamente");
             setNoEmail(true);
+            setNoEmailAlert(true);
         }
 
     }
     const handleChange = event => {
         setEmail(event.target.value);
         setNoEmail(false);
+        setNoEmailAlert(false);
     };
+
+    function checkEmail() {
+        setNoEmailAlert(false);
+        if(email === ""){
+            setMessage("inserire la propria email");
+            setNoEmail(true);
+        }else{
+            const checkRegax = new RegExp('[a-zA-Z0-9_.-]*[@.][a-zA-Z]{2,4}$');
+            if(checkRegax.test(email)){
+                setNoEmail(false);
+            }else{
+                setMessage("controlla che l'email sia stata scritta correttamente");
+                setNoEmail(true);
+            }
+        }
+    }
 
     /*
     * COMPONENT RETURN
@@ -71,7 +91,7 @@ const RicordaPassword = () => {
                             <p>
                                 Per poter recuperare i dati del tuo account è necessario inserire la mail con la quale ti sei registrato.
                             </p>
-                            <div className="alert alert-danger" id="ricordaPassword-form_es_" style={{display: noEmail === true ? 'block' : 'none'}}>
+                            <div className="alert alert-danger" id="ricordaPassword-form_es_" style={{display: noEmailAlert === true ? 'block' : 'none'}}>
                                 <h4>Errore nei dati inseriti:</h4>
                                 <ul>
                                     <li>{message}</li>
@@ -86,6 +106,7 @@ const RicordaPassword = () => {
                                     id="email"
                                     type="text"
                                     onChange={handleChange}
+                                    onBlur={checkEmail}
                                     value={email}
                                 />
                                 <p className="m-1"></p>

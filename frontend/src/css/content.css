@@ -1,3 +1,20 @@
+/*GENERAL CSS*/
+.text-dark {
+    color: #343a40 !important;
+}
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+a{
+    color: #4485AF;
+    text-decoration: none;
+    background-color: transparent;
+}
+a:hover{
+    color: #2f5b78;
+    text-decoration: underline;
+}
+
 /*ROLE Card Content*/
 .card {
     position: relative;
@@ -16,6 +33,10 @@
 .card-body {
     flex: 1 1 auto;
     padding: 1.25rem;
+}
+
+.card-body  a {
+    text-decoration: none ;
 }
 .text-center {
     text-align: center !important;
@@ -102,5 +123,9 @@ input[type="checkbox"] {
 @media screen and (min-width: 576px) {
     .p-sm-3 {
         padding: 1rem !important;
+    }
+
+    .d-sm-block{
+        display: block !important;
     }
 }

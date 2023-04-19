@@ -1,55 +1,58 @@
 import React, {useState} from 'react';
 import Header from '../components/Header';
 import Nav from "../components/Nav";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 const Login = () => {
    /*
    * STATE OF VARIABLE TO LOGIN PAGE
    */
-   const [username, setUsername] = useState('');
+   const [condiceFedele, setCondiceFedele] = useState('');
    const [password, setPassword] = useState('');
    const [checkBox, setCheckBox] = useState(false);
-   const [noUsername, setNoUsername] = useState(false);
-   const [noPassword, setNoPassword] = useState(false);
+   const [noCodiceFedele, setNoCodiceFedele] = useState(true);
+   const [noPassword, setNoPassword] = useState(true);
+   const [messageCodiceFedele, setMessageCodiceFedele] = useState('');
+   const [messagePsw, setMessagePsw] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = event => {
         if(event.target.name === "username"){
-            setUsername(event.target.value);
+            setCondiceFedele(event.target.value);
         }else{
             setPassword(event.target.value);
         }
-
-        if(event.target.value!== ""){
-            if(event.target.name === "username"){
-                setNoUsername(false);
-            }else{
-                setNoPassword(false);
-            }
-        }else{
-            if(event.target.name === "username"){
-                setNoUsername(true);
-            }else{
-                setNoPassword(true);
-            }
-        }
-
     };
 
+    function checkInputCF(){
+        const checkRegaxCodiceFedele = new RegExp('[0-9]*[a-zA-Z]{2}$');
+        if(condiceFedele === "" || checkRegaxCodiceFedele.test(condiceFedele) === false){
+            setNoCodiceFedele(true);
+            if(condiceFedele === ""){
+                setMessageCodiceFedele("inserire il proprio codice fedele");
+            }else{
+                setMessageCodiceFedele("il codice fedele è composto da una parte numerica e due lettere finali, come scritto sul proprio cartellino");
+            }
+        }else{
+            setNoCodiceFedele(false);
+        }
+    }
 
-    function checkInput() {
-        /*const checkRegaxCodiceFedele = new RegExp('[0-9]*[a-zA-Z]{2}$');
-        const checkRegaxPsw = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).+)');*/
-        if(username === "" && password===""){
-            setNoUsername(true);
+    function checkInputPsw(){
+        if(password === ""){
+            setMessagePsw("inserire la password");
             setNoPassword(true);
         }else{
-            if(username === ""){
-                setNoUsername(true);
-            }else{
-                if(password === "") {
-                    setNoPassword(true);
-                }
-            }
+            setNoPassword(false);
+        }
+    }
+
+    function checkInput() {
+        checkInputCF();
+        checkInputPsw();
+        if(noPassword || noCodiceFedele){
+            navigate("/");
+        }else{
+            navigate("/home");
         }
     }
 
@@ -75,10 +78,11 @@ const Login = () => {
                                            name="username"
                                            id="username"
                                            onChange={handleChange}
-                                           value={username}
+                                           onBlur={checkInputCF}
+                                           value={condiceFedele}
                                            type="text"/>
-                                    <div className="errorMessage" id="username" style={{display: noUsername===true ? 'block' : 'none' }} >
-                                        inserire il proprio codice fedele
+                                    <div className="errorMessage" id="username" style={{display: noCodiceFedele===true ? 'block' : 'none' }} >
+                                        {messageCodiceFedele}
                                     </div>
                                 </div>
                                 <div className="form-group error">
@@ -88,10 +92,11 @@ const Login = () => {
                                            name="password"
                                            id="password"
                                            onChange={handleChange}
+                                           onBlur={checkInputPsw}
                                            value={password}
                                            type="password"/>
                                     <div className="errorMessage" id="LoginFormAde_password_em_" style={{display: noPassword===true ? 'block' : 'none' }}>
-                                        inserire la password
+                                        {messagePsw}
                                     </div>
                                 </div>
                                 <div className="form-group success">
@@ -119,9 +124,8 @@ const Login = () => {
                         <div className="row justify-content-center">
                             <div className="col-12 text-center">
                                 <div className="text-muted d-none d-sm-block">oppure</div>
-                                <div>
-                                    <Link to= "/password" className="btn btn-outline-primary w-100 mt-1">Non ricordi più la password?</Link>
-                                </div>
+                                <Link to= "/Registrazione" className="btn btn-outline-primary w-100 mt-1">Crea il tuo account</Link>
+                                <Link to= "/password" className="btn btn-outline-primary w-100 mt-1">Non ricordi più la password?</Link>
                             </div>
                         </div>
                     </div>
