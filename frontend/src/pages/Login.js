@@ -2,20 +2,41 @@ import React, {useState} from 'react';
 import Header from '../components/Header';
 import Nav from "../components/Nav";
 import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+import qs from "qs";
 const Login = () => {
    /*
    * STATE OF VARIABLE TO LOGIN PAGE
    */
    const [condiceFedele, setCondiceFedele] = useState('');
    const [password, setPassword] = useState('');
-   const [checkBox, setCheckBox] = useState(false);
+   const [checkBox, setCheckBox] = useState(0);
    const [noCodiceFedele, setNoCodiceFedele] = useState(true);
    const [noPassword, setNoPassword] = useState(true);
    const [messageCodiceFedele, setMessageCodiceFedele] = useState('');
    const [messagePsw, setMessagePsw] = useState('');
-    const navigate = useNavigate();
+   const navigate = useNavigate();
+
+    const requestAPI = async () => {
+        try {
+            const result = await axios.post(`http://192.168.2.12/newSpazioAderenti/Vanessa/spazioaderenti-react/index.php/site/login`,  qs.stringify({
+                LoginFormAde : {
+                    username : condiceFedele,
+                    password : password,
+                    rememberMe : checkBox
+                }
+            }));
+            if(result) {
+                return result.data;
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const handleChange = event => {
+        setMessagePsw("");
+        setNoPassword(false);
         if(event.target.name === "username"){
             setCondiceFedele(event.target.value);
         }else{
@@ -24,6 +45,8 @@ const Login = () => {
     };
 
     function checkInputCF(){
+        setMessagePsw("");
+        setNoPassword(false);
         const checkRegaxCodiceFedele = new RegExp('[0-9]*[a-zA-Z]{2}$');
         if(condiceFedele === "" || checkRegaxCodiceFedele.test(condiceFedele) === false){
             setNoCodiceFedele(true);
@@ -38,6 +61,8 @@ const Login = () => {
     }
 
     function checkInputPsw(){
+        setMessagePsw("");
+        setNoPassword(false);
         if(password === ""){
             setMessagePsw("inserire la password");
             setNoPassword(true);
@@ -46,13 +71,19 @@ const Login = () => {
         }
     }
 
-    function checkInput() {
+    async function checkInput() {
         checkInputCF();
         checkInputPsw();
         if(noPassword || noCodiceFedele){
             navigate("/");
         }else{
-            navigate("/home");
+            const request = await requestAPI();
+            if(request.message !== ""){
+                setMessagePsw(request.message);
+                setNoPassword(true);
+            }else{
+                navigate("/home");
+            }
         }
     }
 
@@ -109,10 +140,9 @@ const Login = () => {
                                     <input className=""
                                            name="LoginFormAde[rememberMe]"
                                            id="LoginFormAde_rememberMe"
-                                           onClick={() => setCheckBox(!checkBox)}
+                                           onClick={() => setCheckBox((checkBox === 0 ? 1 : 0))}
                                            value={checkBox}
                                            type="checkbox"/>
-                                    <div className="errorMessage" id="LoginFormAde_rememberMe_em_"></div>
                                 </div>
                                 <div className="mb-1">
                                     <button className="btn btn-primary w-100" onClick={() => checkInput()}>
@@ -124,7 +154,7 @@ const Login = () => {
                         <div className="row justify-content-center">
                             <div className="col-12 text-center">
                                 <div className="text-muted d-none d-sm-block">oppure</div>
-                                <Link to= "/Registrazione" className="btn btn-outline-primary w-100 mt-1">Crea il tuo account</Link>
+                                <Link to= "/registrazione" className="btn btn-outline-primary w-100 mt-1">Crea il tuo account</Link>
                                 <Link to= "/password" className="btn btn-outline-primary w-100 mt-1">Non ricordi più la password?</Link>
                             </div>
                         </div>

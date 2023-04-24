@@ -21,7 +21,7 @@ const RicordaPassword = () => {
 
     const requestAPI = async () => {
         try {
-            const result = await axios.post(`http://192.168.2.12/aderenti/index.php/siteTest/password`,  qs.stringify({
+            const result = await axios.post(`http://192.168.2.12/newSpazioAderenti/Vanessa/spazioaderenti-react/index.php/siteTest/password`,  qs.stringify({
                 RicordaPasswordTestForm : {
                     email : email,
                 }

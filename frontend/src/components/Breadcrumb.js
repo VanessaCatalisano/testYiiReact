@@ -10,6 +10,10 @@ const Breadcrumb = (props) => {
                 return "/Ricorda password";
             case '/richiestaPassword':
                 return "/Richiesta password";
+            case '/registrazione':
+                return "/Registrazione";
+            case '/confermaRegistrazione':
+                return "/Registrazione";
             default:
                 return "";
         }

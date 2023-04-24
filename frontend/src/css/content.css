@@ -90,7 +90,7 @@ input[type="checkbox"] {
 .btn:not(:disabled):not(.disabled) {
     cursor: pointer;
 }
-.btn:active, .btn:focus, .btn:hover, .btn:first-child:active {
+.btn:active, .btn:focus, .btn:hover, .btn:first-child:active, :not(.btn-check)+.btn:active {
     color: #fff;
     background-color: #36698a;
     border-color: #326281;
