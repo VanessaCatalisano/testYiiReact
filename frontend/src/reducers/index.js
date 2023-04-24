@@ -1,13 +1,8 @@
-import initialState from "../store/index"
-const reducer = (state = initialState, action) => {
-    switch(action.type) {
+import Loggedreducer from "./isLogged";
+import {combineReducers} from "redux";
 
-        case "HANDLE_INPUT_CHANGE":
-            break;
+const rootReducer = combineReducers({
+    Loggedreducer,
+});
 
-        case "ADD_NEW_MEMBER":
-            break;
-    }
-
-    return state;
-}
+export default rootReducer;
