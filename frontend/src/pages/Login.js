@@ -85,6 +85,8 @@ const Login = () => {
                 setMessagePsw(request.message);
                 setNoPassword(true);
             }else{
+                state.users.account.codiceMembro = condiceFedele;
+                state.users.account.password = password;
                 dispatch(login(state));
                 navigate("/home");
             }
