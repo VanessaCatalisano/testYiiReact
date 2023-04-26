@@ -1,13 +1,10 @@
 import {login, logout} from "../actions";
 // questo è lo stato inziale che viene inserito di default se non mi viene passato nulla
 const initialState = {
-    users: {
-        login: false,
-        account:{
-            codiceMembro:"",
-            password:"",
-            email:""
-        }
+    login: false,
+    account:{
+        codiceMembro:"",
+        email:""
     }
 }
 

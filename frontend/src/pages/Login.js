@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { format } from 'date-fns'
 import Header from '../components/Header';
 import Nav from "../components/Nav";
 import {Link, useNavigate} from "react-router-dom";
@@ -85,9 +86,19 @@ const Login = () => {
                 setMessagePsw(request.message);
                 setNoPassword(true);
             }else{
-                state.users.account.codiceMembro = condiceFedele;
-                state.users.account.password = password;
+                state.account.codiceMembro = condiceFedele;
                 dispatch(login(state));
+
+                if(checkBox === 1){
+                    //i dati rimangono salvati anche dopo la chiusura del browser
+                    localStorage.setItem("CF",condiceFedele);
+                    localStorage.setItem("login",JSON.stringify(true));
+                    localStorage.setItem("dateLogin",format(new Date(), 'yyyy-MM-dd'));
+                }else{
+                    //i dati rimangono salvati fino alla chiusura dal browser
+                    sessionStorage.setItem("CF",condiceFedele);
+                    sessionStorage.setItem("login",JSON.stringify(true));
+                }
                 navigate("/home");
             }
         }
