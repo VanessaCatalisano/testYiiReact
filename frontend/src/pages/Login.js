@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
+import { format } from 'date-fns'
 import Header from '../components/Header';
 import Nav from "../components/Nav";
 import {Link, useNavigate} from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux";
+import {login} from "../actions/index";
 import axios from "axios";
 import qs from "qs";
 const Login = () => {
@@ -16,7 +19,8 @@ const Login = () => {
    const [messageCodiceFedele, setMessageCodiceFedele] = useState('');
    const [messagePsw, setMessagePsw] = useState('');
    const navigate = useNavigate();
-
+   const state = useSelector(state => state.Loggedreducer);
+   const dispatch = useDispatch();
     const requestAPI = async () => {
         try {
             const result = await axios.post(`http://192.168.2.12/newSpazioAderenti/Vanessa/spazioaderenti-react/index.php/site/login`,  qs.stringify({
@@ -82,6 +86,19 @@ const Login = () => {
                 setMessagePsw(request.message);
                 setNoPassword(true);
             }else{
+                state.account.codiceMembro = condiceFedele;
+                dispatch(login(state));
+
+                if(checkBox === 1){
+                    //i dati rimangono salvati anche dopo la chiusura del browser
+                    localStorage.setItem("CF",condiceFedele);
+                    localStorage.setItem("login",JSON.stringify(true));
+                    localStorage.setItem("dateLogin",format(new Date(), 'yyyy-MM-dd'));
+                }else{
+                    //i dati rimangono salvati fino alla chiusura dal browser
+                    sessionStorage.setItem("CF",condiceFedele);
+                    sessionStorage.setItem("login",JSON.stringify(true));
+                }
                 navigate("/home");
             }
         }
