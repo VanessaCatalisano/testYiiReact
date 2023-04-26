@@ -2,7 +2,7 @@ import Router from './components/Router'
 import "./css/content.css";
 import {format} from "date-fns";
 function App() {
-    if(localStorage.getItem("login") !== null && localStorage.getItem("dateLogin") !== null){
+    /*if(localStorage.getItem("login") !== null && localStorage.getItem("dateLogin") !== null){
         if(console.log((new Date(localStorage.getItem("dateLogin"))-new Date(format(new Date("2023-04-25"), 'yyyy-MM-dd')))/ (1000 * 3600 * 24)) > 30){
             localStorage.clear();
         }
@@ -10,7 +10,7 @@ function App() {
         if(sessionStorage.getItem("login") !== null){
 
         }
-    }
+    }*/
   return (
     <div className="App">
         <Router></Router>
