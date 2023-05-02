@@ -35,9 +35,9 @@ a:hover{
     padding: 1.25rem;
 }
 
-.card-body  a {
+/*.card-body  a {
     text-decoration: none ;
-}
+}*/
 .text-center {
     text-align: center !important;
 }
@@ -118,6 +118,28 @@ input[type="checkbox"] {
 
 .p-2 {
     padding: 0.5rem !important;
+}
+
+.bg-warning {
+    background-color: #DD9A1F !important;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+a.text-light:hover, a.text-light:focus {
+    color: #cbd3da !important;
+}
+
+#home a {
+    color: #4485AF;
+    text-decoration: none;
+    background-color: transparent;
+}
+#home a:hover {
+    color: #2f5b78;
+    text-decoration: underline;
 }
 
 @media screen and (min-width: 576px) {

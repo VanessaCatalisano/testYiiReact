@@ -4,8 +4,12 @@ import Login from "../pages/Login"
 import RichiestaPassword from "../pages/RichiestaPassword"
 import Registrazione from "../pages/Registrazione";
 import ConfermaRegistrazione from "../pages/ConfermaRegisrazione"
-import {Route, Routes} from "react-router-dom";;
+import {Navigate, Route, Routes} from "react-router-dom";
 const Router = () => {
+    let login = false;
+    if(localStorage.length > 0 || sessionStorage.length > 0){
+        login = true;
+    }
 
     return <div>
         <Routes>

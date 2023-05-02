@@ -92,11 +92,13 @@ const Login = () => {
                 if(checkBox === 1){
                     //i dati rimangono salvati anche dopo la chiusura del browser
                     localStorage.setItem("CF",condiceFedele);
+                    localStorage.setItem("psw",password);
                     localStorage.setItem("login",JSON.stringify(true));
                     localStorage.setItem("dateLogin",format(new Date(), 'yyyy-MM-dd'));
                 }else{
                     //i dati rimangono salvati fino alla chiusura dal browser
                     sessionStorage.setItem("CF",condiceFedele);
+                    sessionStorage.setItem("psw",password);
                     sessionStorage.setItem("login",JSON.stringify(true));
                 }
                 navigate("/home");
